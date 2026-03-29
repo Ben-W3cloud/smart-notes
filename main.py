@@ -1,8 +1,5 @@
-import re
-
 from fastapi import FastAPI, HTTPException
-from models import Notes
-from notes import notes
+from models import NoteCreate, NoteResponse
 from db import get_db_connection
 from mysql.connector import Error 
 
@@ -14,7 +11,7 @@ app = FastAPI()
 def home ():
     return { "name" : "Notes API"}
 
-@app.get("/notes")
+@app.get("/notes", response_model=NoteResponse)
 async def get_all_notes():
     try:
         conn = get_db_connection()
@@ -30,7 +27,7 @@ async def get_all_notes():
     except Error as e:
         raise HTTPException(status_code=500, detail=f"Error occurred while fetching notes: {str(e)}")
 
-@app.get("/notes/{id}")
+@app.get("/notes/{id}", response_model=NoteResponse)
 async def get_note(id: int):
     try:
         conn = get_db_connection()
@@ -50,7 +47,7 @@ async def get_note(id: int):
           raise HTTPException(status_code=404, detail=f"Error that was found : {str(e)}")
 
 @app.post("/notes")
-def create_notes(notes:Notes):
+def create_notes(notes:NoteCreate):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
@@ -59,16 +56,16 @@ def create_notes(notes:Notes):
         values = (notes.title, notes.content)
 
         cursor.execute(query,values)
-        cursor.commit()
+        conn.commit()
 
         cursor.close()
         conn.close()
-        return notes
+        return { "message" : "Note has been created successfully" }
     except Error as e:
         raise HTTPException(status_code=500, detail=f"Error that was found : {str(e)}")
 
 @app.put("/notes/{id}")
-def update(id:int):
+def update(id:int, notes:NoteCreate):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
@@ -77,7 +74,7 @@ def update(id:int):
         values = (notes.title, notes.content, id)
 
         cursor.execute(query,values)
-        cursor.commit()
+        conn.commit()
 
         if cursor.rowcount == 0:
             raise HTTPException(status_code=404, detail="Note not found")
@@ -91,7 +88,7 @@ def update(id:int):
         raise HTTPException(status_code=500, detail=f"Error that was found : {str(e)}")    
 
 @app.delete("/notes/{id}")
-def delete_notes():
+def delete_notes(id:int):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
@@ -104,6 +101,6 @@ def delete_notes():
 
         cursor.close()
         conn.close()
-        return notes
+        return { "message" : "Note has been deleted successfully" }
     except Error as e:
         raise HTTPException(status_code=500, detail=f"Error that was found : {str(e)}")    
