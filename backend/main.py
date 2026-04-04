@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from models import NoteCreate, NoteResponse
-from db import get_db_connection
+from backend.models import NoteCreate, NoteResponse
+from backend.database import get_db_connection
 from mysql.connector import Error 
 
 #create, delete, update, get ( notes -all ,  notes by id)
