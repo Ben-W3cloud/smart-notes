@@ -1,0 +1,231 @@
+/* ============================================================
+   CYBER DESIGN SYSTEM — Smart Notes App
+   ============================================================ */
+
+/* --- CSS Variables (Design Tokens) --- */
+:root {
+  /* Background */
+  --bg-deep: #03040f;
+  --bg-surface: #070b1a;
+  --bg-card: rgba(10, 16, 35, 0.75);
+  --bg-modal: rgba(7, 11, 26, 0.92);
+
+  /* Primary Colors */
+  --navy-900: #03040f;
+  --navy-800: #070b1a;
+  --navy-700: #0d1428;
+  --navy-600: #0f1d3d;
+
+  /* Accent Colors */
+  --neon-blue: #1a8cff;
+  --neon-cyan: #00e5ff;
+  --neon-purple: #9b59f0;
+  --neon-blue-dim: rgba(26, 140, 255, 0.18);
+  --neon-cyan-dim: rgba(0, 229, 255, 0.12);
+  --neon-purple-dim: rgba(155, 89, 240, 0.12);
+
+  /* Text */
+  --text-primary: #e8edf8;
+  --text-secondary: #8899bb;
+  --text-muted: #4a5a7a;
+  --text-accent: #1a8cff;
+
+  /* Borders */
+  --border-dim: rgba(26, 140, 255, 0.15);
+  --border-glow: rgba(26, 140, 255, 0.5);
+  --border-cyan: rgba(0, 229, 255, 0.4);
+
+  /* Glow Shadows */
+  --glow-blue: 0 0 18px rgba(26, 140, 255, 0.35);
+  --glow-cyan: 0 0 18px rgba(0, 229, 255, 0.3);
+  --glow-purple: 0 0 18px rgba(155, 89, 240, 0.3);
+  --glow-card: 0 4px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(26, 140, 255, 0.1);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+
+  /* Transitions */
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fonts */
+  --font-heading: 'Rajdhani', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+  /* Layout */
+  --navbar-height: 60px;
+  --max-width: 1100px;
+  --content-padding: 16px;
+}
+
+/* --- Global Reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Ambient background glow layers */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20vh;
+  left: -10vw;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, rgba(26, 140, 255, 0.06) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -15vh;
+  right: -10vw;
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, rgba(155, 89, 240, 0.05) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); }
+h2 { font-size: clamp(1.4rem, 4vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 3vw, 1.5rem); }
+
+p {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+a {
+  color: var(--neon-blue);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--neon-cyan);
+}
+
+/* --- Glassmorphism Utility --- */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg);
+}
+
+.glass-hover {
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.glass-hover:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-blue), var(--glow-card);
+  transform: translateY(-2px);
+}
+
+/* --- Scrollbar Styling --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy-800);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--navy-600);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-blue-dim);
+}
+
+/* --- Utility --- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* --- Glow Text Utility --- */
+.text-glow {
+  text-shadow: 0 0 20px rgba(26, 140, 255, 0.6);
+}
+
+.text-cyan-glow {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 16px rgba(0, 229, 255, 0.5);
+}
+
+/* --- Animated border utility --- */
+@keyframes borderGlow {
+  0%, 100% { border-color: var(--border-dim); box-shadow: none; }
+  50%       { border-color: var(--border-cyan); box-shadow: var(--glow-cyan); }
+}
+
+.border-pulse {
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+/* --- Fade in animation --- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.45s ease forwards;
+}

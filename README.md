@@ -41,23 +41,25 @@ A full-stack notes application that allows users to create, read, update, and de
 
 ```
 smart-notes-app/
-│
 ├── backend/
-│   ├── main.py
-│   ├── database.py
-│   ├── models.py
-│   ├── schemas.py
-│   │
-│   ├── routes/
-│   │   └── notes.py
-│   │
-│   ├── services/
-│   │   └── ai.py
-│   │
-│   ├── config/
-│   │   └── settings.py
-│   │
-│   └── requirements.txt
+|   |──app/
+│       ├── main.py
+│       ├── database.py
+│       ├── models.py
+│       ├── schemas.py
+│       │
+│       ├── routes/
+│       │   └── notes.py
+│       │
+│       ├── services/
+│       │   └── ai.py
+│       │
+│       ├── config/
+│       │   └── settings.py
+│       │
+│       ├── utils/
+│       │   └── helpers.py
+│       └──
 │
 ├── frontend/
 │   ├── src/

@@ -1,0 +1,14 @@
+/* ============================================================
+   App.css - Page & layout-level styles
+   ============================================================ */
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;
+  padding-top: var(--navbar-height);
+}
